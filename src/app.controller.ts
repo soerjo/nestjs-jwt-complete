@@ -1,12 +1,11 @@
 import { hostname } from 'os';
-import { Controller, Get, HttpCode } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { GetUserReq } from './common/decorator/getUser.decorator';
 
 @Controller('/')
 export class AppController {
   @Get()
-  @HttpCode(200)
-  test() {
-    console.log(`this hostname: ${hostname}`);
-    return { message: `the hostname: ${hostname}` };
+  test(@GetUserReq('id') id: string, @GetUserReq('email') email: string) {
+    return { message: `the hostname: ${hostname}`, userId: id, email: email };
   }
 }

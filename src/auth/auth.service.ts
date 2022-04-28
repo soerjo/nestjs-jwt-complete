@@ -49,11 +49,11 @@ export class AuthService {
       email: user.email,
     };
     const access_token: string = await this.jwtService.signAsync(payload, {
-      secret: this.config.get('SECRET_KEY_JWT'),
-      expiresIn: '1m',
+      secret: this.config.get('SECRET_KEY_JWT_ACCESS'),
+      expiresIn: '20s',
     });
     const refresh_token: string = await this.jwtService.signAsync(payload, {
-      secret: this.config.get('SECRET_KEY_JWT'),
+      secret: this.config.get('SECRET_KEY_JWT_REFRESH'),
       expiresIn: '1h',
     });
 
@@ -85,22 +85,17 @@ export class AuthService {
   }
 
   async logout(user: Partial<User>) {
+    console.log('userid: ', user.id);
     const cache = await this.prismaService.cache.findUnique({
       where: { userid: user.id },
     });
-    if (cache)
-      await this.prismaService.cache.delete({ where: { userid: user.id } });
+    if (!cache) throw new ForbiddenException('please login again!');
+    await this.prismaService.cache.delete({ where: { userid: user.id } });
   }
 
-  async getRefreshToken(
-    user: Partial<User>,
-    refresh_token: string,
-  ): Promise<TokentResDto> {
-    const cache = await this.prismaService.cache.findFirst({
-      where: { refreshToken: refresh_token },
-    });
-
-    if (!cache) throw new ForbiddenException('please login again!');
+  async getRefreshToken(user: Partial<User>): Promise<TokentResDto> {
+    console.log(user);
+    if (!user) throw new ForbiddenException('please login again!');
 
     return await this.signJwt(user);
   }
