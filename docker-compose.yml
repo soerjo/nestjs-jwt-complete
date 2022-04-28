@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+  # webapp:
+  #   build: .
+  #   depends_on:
+  #     - dbpostgres
+  #   # volumes:
+  #   #   - .:/app
+
+  # nginx:
+  #   image: nginx:latest
+  #   volumes:
+  #     - ./conf.d:/etx/nginx/conf.d
+  #   depends_on:
+  #     - webapp
+  #   ports:
+  #     - 3000:3000
+
+  dbpostgres:
+    container_name: dbPostgres
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: $DB_POSTGRES_PASSWORD
+      POSTGRES_USER: $DB_POSTGRES_USER
+      POSTGRES_DB: $DB_POSTGRES_DB
+    ports:
+      - 5432:5432
+    volumes:
+      - dbPostgres:/var/lib/postgresql/data
+
+volumes:
+  dbPostgres:

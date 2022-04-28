@@ -1,12 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { hostname } from 'os';
+import { Controller, Get, HttpCode } from '@nestjs/common';
 
-@Controller()
+@Controller('/')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @HttpCode(200)
+  test() {
+    console.log(`this hostname: ${hostname}`);
+    return { message: `the hostname: ${hostname}` };
   }
 }
