@@ -12,6 +12,7 @@ https://www.youtube.com/watch?v=uAKzFhE3rxU&ab_channel=CodeWithVlad
 ## tech that we learn...
 
 - docker-compose
+- nginx loadbalancer
 - postgres
 - jwt
 - passport-jwt

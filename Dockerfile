@@ -10,6 +10,6 @@ RUN npm ci
 
 COPY . .
 
-RUN npx run generate
+RUN npx prisma generate
 
 CMD ["npm","run","start:dev"]

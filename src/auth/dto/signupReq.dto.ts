@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, Min } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class SignupReqDto {
   @IsEmail()
@@ -7,6 +7,6 @@ export class SignupReqDto {
 
   @IsString()
   @IsNotEmpty()
-  @Min(8, { message: 'paswrod is to short min 8 Char' })
+  @MinLength(8, { message: 'paswrod is to short min 8 Char' })
   password: string;
 }
